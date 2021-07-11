@@ -1121,6 +1121,10 @@ int xdo_send_keysequence_window(const xdo_t *xdo, Window window, const char *key
   int ret = 0;
   int modifier = 0;
   ret += _xdo_send_keysequence_window_do(xdo, window, keyseq, True, &modifier, delay / 2);
+
+  if (ret == 1)
+    return ret;
+
   ret += _xdo_send_keysequence_window_do(xdo, window, keyseq, False, &modifier, delay / 2);
   return ret;
 }
