@@ -107,8 +107,7 @@ xdo_t* xdo_new_with_opened_display(Display *xdpy, const char *display,
   }
 
   /* XXX: Check for NULL here */
-  xdo = malloc(sizeof(xdo_t));
-  memset(xdo, 0, sizeof(xdo_t));
+  xdo = calloc(1, sizeof(xdo_t));
 
   xdo->xdpy = xdpy;
   xdo->close_display_when_freed = close_display_when_freed;
