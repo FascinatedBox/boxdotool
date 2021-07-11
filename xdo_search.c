@@ -231,6 +231,48 @@ static int _xdo_is_window_visible(const xdo_t *xdo, Window wid) {
   return True;
 } /* int _xdo_is_window_visible */
 
+static int compile_regexps(const xdo_search_t *search,
+                           regex_t *title_re,
+                           regex_t *class_re,
+                           regex_t *classname_re,
+                           regex_t *name_re,
+                           regex_t *role_re)
+{
+  int result = True;
+
+  if (!compile_re(search->title, title_re)) {
+    return False;
+  }
+
+  if (result && !compile_re(search->winclass, class_re)) {
+    regfree(title_re);
+    return False;
+  }
+
+  if (result && !compile_re(search->winclassname, classname_re)) {
+    regfree(class_re);
+    regfree(title_re);
+    return False;
+  }
+
+  if (result && !compile_re(search->winrole, role_re)) {
+    regfree(classname_re);
+    regfree(class_re);
+    regfree(title_re);
+    return False;
+  }
+
+  if (result && !compile_re(search->winname, name_re)) {
+    regfree(role_re);
+    regfree(classname_re);
+    regfree(class_re);
+    regfree(title_re);
+    return False;
+  }
+
+  return result;
+}
+
 static int check_window_match(const xdo_t *xdo, Window wid,
                               const xdo_search_t *search) {
   regex_t title_re;
@@ -239,21 +281,12 @@ static int check_window_match(const xdo_t *xdo, Window wid,
   regex_t name_re;
   regex_t role_re;
 
+  int re_ok = 0;
+  re_ok = compile_regexps(search, &title_re, &class_re, &classname_re, &name_re,
+                  &role_re);
 
-  if (!compile_re(search->title, &title_re) \
-      || !compile_re(search->winclass, &class_re) \
-      || !compile_re(search->winclassname, &classname_re) \
-      || !compile_re(search->winrole, &role_re) \
-      || !compile_re(search->winname, &name_re)) {
-
-    regfree(&title_re);
-    regfree(&class_re);
-    regfree(&classname_re);
-    regfree(&name_re);
-    regfree(&role_re);
-
+  if (re_ok == 0)
     return False;
-  }
 
   /* Set this to 1 for dev debugging */
   static const int debug = 0;
