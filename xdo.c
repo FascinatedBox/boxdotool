@@ -1358,6 +1358,7 @@ int _xdo_send_keysequence_window_to_keycode_list(const xdo_t *xdo, const char *k
   const char *tok = NULL;
   char *keyseq_copy = NULL, *strptr = NULL;
   int i = 0;
+  int any_failed = 0;
 
   /* Array of keys to press, in order given by keyseq */
   int keys_size = 10;
@@ -1389,6 +1390,7 @@ int _xdo_send_keysequence_window_to_keycode_list(const xdo_t *xdo, const char *k
       if (isdigit(tok[0])) {
         key = (unsigned int) atoi(tok);
       } else {
+        any_failed = 1;
         fprintf(stderr, "(symbol) No such key name '%s'. Ignoring it.\n", tok);
         continue;
       }
@@ -1413,7 +1415,7 @@ int _xdo_send_keysequence_window_to_keycode_list(const xdo_t *xdo, const char *k
   }
 
   free(keyseq_copy);
-  return True;
+  return any_failed == 0;
 }
 
 int _is_success(const char *funcname, int code, const xdo_t *xdo) {
