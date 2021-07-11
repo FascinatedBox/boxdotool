@@ -1,6 +1,8 @@
-*.o
-*.so*
 *.1
-libxdo.pc
+*.so*
+boxdotool
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
 xdo_version.h
-xdotool
