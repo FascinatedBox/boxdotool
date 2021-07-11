@@ -1965,10 +1965,11 @@ int xdo_minimize_window(const xdo_t *xdo, Window window) {
 void _xdo_debug(const xdo_t *xdo, const char *format, ...) {
   va_list args;
 
-  va_start(args, format);
   if (xdo->debug) {
+    va_start(args, format);
     vfprintf(stderr, format, args);
     fprintf(stderr, "\n");
+    va_end(args);
   }
 } /* _xdo_debug */
 
