@@ -1854,12 +1854,6 @@ int xdo_kill_window(const xdo_t *xdo, Window window) {
 }
 
 int xdo_close_window(const xdo_t *xdo, Window window) {
-  int ret;
-  ret = XDestroyWindow(xdo->xdpy, window);
-  return _is_success("XDestroyWindow", ret == 0, xdo);
-}
-
-int xdo_quit_window(const xdo_t *xdo, Window window) {
   XEvent xev;
   int ret;
   Window root = RootWindow(xdo->xdpy, 0);

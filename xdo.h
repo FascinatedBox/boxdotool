@@ -840,16 +840,10 @@ int xdo_set_desktop_viewport(const xdo_t *xdo, int x, int y);
 int xdo_kill_window(const xdo_t *xdo, Window window);
 
 /**
- * Close a window without trying to kill the client.
- *
- */
-int xdo_close_window(const xdo_t *xdo, Window window);
-
-/**
  * Request that a window close, gracefully.
  *
  */
-int xdo_quit_window(const xdo_t *xdo, Window window);
+int xdo_close_window(const xdo_t *xdo, Window window);
 
 /**
  * Find a client window that is a parent of the window given
