@@ -4,12 +4,6 @@
 #include <time.h> /* for clock_gettime */
 #include <sys/time.h> /* for timeradd and friends */
 
-#if defined(MISSING_CLOCK_GETTIME)
-/* http://code.google.com/p/semicomplete/issues/detail?id=37
- * OS X doesn't support clock_gettime (in at least OSX <= 10.11) */
-#  include "patch_clock_gettime.h"
-#endif
-
 /* TODO(sissel): Refactor the madness.
  * The event look, delay and quiesce state handling, etc, are all pretty
  * intermingled. This needs a serious refactor into separate functions and
