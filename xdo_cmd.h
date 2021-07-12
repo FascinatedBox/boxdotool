@@ -20,9 +20,6 @@ extern "C" {
 
 #define HELP_SEE_WINDOW_STACK \
   "If no window is given, %1 is used. See WINDOW STACK in xdotool(1)\n"
-#define HELP_CHAINING_ENDS \
-  "This command consumes all arguments after it, so you cannot chain\n" \
-  " additional commands after it.\n"
 
 extern void consume_args(context_t *context, int argc);
 extern void window_list(context_t *context, const char *window_arg,
