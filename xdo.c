@@ -1194,7 +1194,9 @@ int xdo_find_window_client(const xdo_t *xdo, Window window, Window *window_ret,
 
     long items;
     _xdo_debug(xdo, "get_window_property on %lu", window);
-    xdo_get_window_property_by_atom(xdo, window, atom_wmstate, &items, NULL, NULL);
+
+    unsigned char *property = xdo_get_window_property_by_atom(xdo, window, atom_wmstate, &items, NULL, NULL);
+    free(property);
 
     if (items == 0) {
       /* This window doesn't have WM_STATE property, keep searching. */
