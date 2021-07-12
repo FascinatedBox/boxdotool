@@ -109,7 +109,10 @@ int cmd_behave(context_t *context) {
     // Copy context
     context_t tmpcontext = *context;
 
-    tmpcontext.nwindows = 1;
+    /* The appropriate window will be saved with window_save. */
+    tmpcontext.windows = NULL;
+    tmpcontext.nwindows = 0;
+
     Window hover; /* for LeaveNotify */
     switch (e.type) {
       case LeaveNotify:
@@ -132,16 +135,16 @@ int cmd_behave(context_t *context) {
 
         /* fall through */
       case EnterNotify:
-        tmpcontext.windows = &(e.xcrossing.window);
+        window_save(&tmpcontext, e.xcrossing.window);
         ret = context_execute(&tmpcontext);
         break;
       case FocusIn:
       case FocusOut:
-        tmpcontext.windows = &(e.xfocus.window);
+        window_save(&tmpcontext, e.xfocus.window);
         ret = context_execute(&tmpcontext);
         break;
       case ButtonRelease:
-        tmpcontext.windows = &(e.xbutton.window);
+        window_save(&tmpcontext, e.xbutton.window);
         ret = context_execute(&tmpcontext);
         break;
       default:
