@@ -40,7 +40,7 @@ int cmd_getwindowclassname(context_t *context) {
   window_each(context, window_arg, {
     xdo_get_window_classname(context->xdo, window, &name);
     xdotool_output(context, "%s", name);
-    XFree(name);
+    free(name);
   }); /* window_each(...) */
   return EXIT_SUCCESS;
 }

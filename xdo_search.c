@@ -104,7 +104,7 @@ static int _xdo_match_window_name(const xdo_t *xdo, Window window, regex_t *re) 
     for (i = 0; i < count; i++) {
       if (regexec(re, list[i], 0, NULL, 0) == 0) {
         XFreeStringList(list);
-        XFree(tp.value);
+        free(tp.value);
         return True;
       }
     }
@@ -112,12 +112,12 @@ static int _xdo_match_window_name(const xdo_t *xdo, Window window, regex_t *re) 
     /* Treat windows with no names as empty strings */
     if (regexec(re, "", 0, NULL, 0) == 0) {
       XFreeStringList(list);
-      XFree(tp.value);
+      free(tp.value);
       return True;
     }
   }
   XFreeStringList(list);
-  XFree(tp.value);
+  free(tp.value);
   return False;
 } /* int _xdo_match_window_name */
 
@@ -129,12 +129,12 @@ static int _xdo_match_window_class(const xdo_t *xdo, Window window, regex_t *re)
   if (XGetClassHint(xdo->xdpy, window, &classhint)) {
     //printf("%d: class %s\n", window, classhint.res_class);
     if ((classhint.res_class) && (regexec(re, classhint.res_class, 0, NULL, 0) == 0)) {
-      XFree(classhint.res_name);
-      XFree(classhint.res_class);
+      free(classhint.res_name);
+      free(classhint.res_class);
       return True;
     }
-    XFree(classhint.res_name);
-    XFree(classhint.res_class);
+    free(classhint.res_name);
+    free(classhint.res_class);
   } else {
     /* Treat windows with no class as empty strings */
     if (regexec(re, "", 0, NULL, 0) == 0) {
@@ -151,12 +151,12 @@ static int _xdo_match_window_classname(const xdo_t *xdo, Window window, regex_t 
 
   if (XGetClassHint(xdo->xdpy, window, &classhint)) {
     if ((classhint.res_name) && (regexec(re, classhint.res_name, 0, NULL, 0) == 0)) {
-      XFree(classhint.res_name);
-      XFree(classhint.res_class);
+      free(classhint.res_name);
+      free(classhint.res_class);
       return True;
     }
-    XFree(classhint.res_name);
-    XFree(classhint.res_class);
+    free(classhint.res_name);
+    free(classhint.res_class);
   } else {
     /* Treat windows with no class name as empty strings */
     if (regexec(re, "", 0, NULL, 0) == 0) {
@@ -191,7 +191,7 @@ static int _xdo_match_window_role(const xdo_t *xdo, Window window, regex_t *re) 
   }
   if(status) {
     XFreeStringList(list);
-    XFree(tp.value);
+    free(tp.value);
   }
   return ret;
 } /* int _xdo_match_window_role */
@@ -431,7 +431,7 @@ static void find_matching_windows(const xdo_t *xdo, Window window,
 
   if (!success) {
     if (children != NULL)
-      XFree(children);
+      free(children);
     return;
   }
 
@@ -466,5 +466,5 @@ static void find_matching_windows(const xdo_t *xdo, Window window,
   } /* recurse on children if not at max depth */
 
   if (children != NULL)
-    XFree(children);
+    free(children);
 } /* void find_matching_windows */

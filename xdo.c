@@ -204,7 +204,7 @@ int xdo_get_window_location(const xdo_t *xdo, Window wid,
     unsigned int nchildren;
     XQueryTree(xdo->xdpy, wid, &root, &parent, &children, &nchildren);
     if (children != NULL) {
-      XFree(children);
+      free(children);
     }
     if (parent == attr.root) {
       x = attr.x;
@@ -345,7 +345,7 @@ int xdo_set_window_class (const xdo_t *xdo, Window wid, const char *name,
     hint->res_class = (char*)_class;
 
   ret = XSetClassHint(xdo->xdpy, wid, hint);
-  XFree(hint);
+  free(hint);
   return _is_success("XSetClassHint", ret == 0, xdo);
 }
 
@@ -361,7 +361,7 @@ int xdo_set_window_urgency (const xdo_t *xdo, Window wid, int urgency) {
     hint->flags = hint->flags & ~XUrgencyHint;
 
   ret = XSetWMHints(xdo->xdpy, wid, hint);
-  XFree(hint);
+  free(hint);
   return _is_success("XSetWMHint", ret == 0, xdo);
 }
 
@@ -1056,7 +1056,7 @@ int xdo_send_keysequence_window_list_do(const xdo_t *xdo, Window window, charcod
       break;
     }
   }
-  XFree(keysyms);
+  free(keysyms);
 
   /* Allow passing NULL for modifier in case we don't care about knowing
    * the modifier map state after we finish */
@@ -1205,7 +1205,7 @@ int xdo_find_window_client(const xdo_t *xdo, Window window, Window *window_ret,
         _xdo_debug(xdo, "searching parents");
         /* Don't care about the children, but we still need to free them */
         if (children != NULL)
-          XFree(children);
+          free(children);
         window = parent;
       } else if (direction == XDO_FIND_CHILDREN) {
         _xdo_debug(xdo, "searching %d children", nchildren);
@@ -1224,12 +1224,12 @@ int xdo_find_window_client(const xdo_t *xdo, Window window, Window *window_ret,
           return XDO_ERROR;
         }
         if (children != NULL)
-          XFree(children);
+          free(children);
       } else {
         fprintf(stderr, "Invalid find_client direction (%d)\n", direction);
         *window_ret = 0;
         if (children != NULL)
-          XFree(children);
+          free(children);
         return XDO_ERROR;
       }
     } else {
@@ -1310,7 +1310,7 @@ static void _xdo_populate_charcode_map(xdo_t *xdo) {
   KeySym *keysyms = XGetKeyboardMapping(xdo->xdpy, xdo->keycode_low,
                                         xdo->keycode_high - xdo->keycode_low + 1,
                                         &xdo->keysyms_per_keycode);
-  XFree(keysyms);
+  free(keysyms);
 
   /* Add 2 to the size because the range [low, high] is inclusive */
   /* Add 2 more for tab (\t) and newline (\n) */
@@ -1917,7 +1917,7 @@ int xdo_get_window_name(const xdo_t *xdo, Window window,
 int xdo_get_window_classname(const xdo_t *xdo, Window window, unsigned char **name_ret) {
   XClassHint classhint;
   XGetClassHint(xdo->xdpy, window, &classhint);
-  XFree(classhint.res_name);
+  free(classhint.res_name);
   *name_ret = (char*) classhint.res_class;
   return 0;
 }
@@ -2009,7 +2009,7 @@ int xdo_get_viewport_dimensions(xdo_t *xdo, unsigned int *width,
     }
     *width = (unsigned int) info[screen].width;
     *height = (unsigned int) info[screen].height;
-    XFree(info);
+    free(info);
     return XDO_SUCCESS;
   } else {
     /* Use the root window size if no zinerama */
