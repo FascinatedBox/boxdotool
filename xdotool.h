@@ -7,7 +7,7 @@ extern "C" {
 
 /* TODO(sissel): use proper printf format depending on the storage
  * size of Window (could be 4 or 8 bytes depending on platform */
-#define window_print(window) (printf("%ld\n", window))
+#define window_print(window) (printf("0x%.8lx\n", window))
 #define window_each(context, window_arg, block) \
 { \
   Window *windows; \
