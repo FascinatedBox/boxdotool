@@ -91,34 +91,21 @@ static int _xdo_match_window_name(const xdo_t *xdo, Window window, regex_t *re) 
    * match in _xdo_match_window_classname. But really, most of the time 'name'
    * refers to the window manager name for the window, which is displayed in
    * the titlebar */
-  int i;
-  int count = 0;
-  char **list = NULL;
-  XTextProperty tp;
+  unsigned char *name;
+  int name_len;
+  int name_type;
 
+  xdo_get_window_name(xdo, window, &name, &name_len, &name_type);
 
-  XGetWMName(xdo->xdpy, window, &tp);
-  if (tp.nitems > 0) {
-    //XmbTextPropertyToTextList(xdo->xdpy, &tp, &list, &count);
-    Xutf8TextPropertyToTextList(xdo->xdpy, &tp, &list, &count);
-    for (i = 0; i < count; i++) {
-      if (regexec(re, list[i], 0, NULL, 0) == 0) {
-        XFreeStringList(list);
-        free(tp.value);
-        return True;
-      }
-    }
-  } else {
-    /* Treat windows with no names as empty strings */
-    if (regexec(re, "", 0, NULL, 0) == 0) {
-      XFreeStringList(list);
-      free(tp.value);
-      return True;
-    }
-  }
-  XFreeStringList(list);
-  free(tp.value);
-  return False;
+  char *title = "";
+  int result;
+
+  if (name_len)
+    title = (char *)name;
+
+  result = regexec(re, title, 0, NULL, 0);
+  free(name);
+  return result == 0;
 } /* int _xdo_match_window_name */
 
 static int _xdo_match_window_class(const xdo_t *xdo, Window window, regex_t *re) {
