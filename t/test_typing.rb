@@ -12,7 +12,7 @@ class XdotoolTypingTests < MiniTest::Test
 
   # override XdoTestHelper#setup
   def setup
-    @xdotool = "../xdotool"
+    @xdotool = "../boxdotool"
     @title = "#{self.class.name}_#{rand}"
 
     setup_ensure_x_is_healthy
@@ -25,7 +25,7 @@ class XdotoolTypingTests < MiniTest::Test
       #puts "Waiting for focus"
       xdotool "windowfocus #{@wid}"
       status, lines = xdotool "getwindowfocus -f"
-      if status == 0 and lines.first.to_i == @wid
+      if status == 0 and lines.first.to_i(16) == @wid
         ready = true
       end
       sleep 0.2

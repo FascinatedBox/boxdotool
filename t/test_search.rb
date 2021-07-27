@@ -12,7 +12,7 @@ class XdotoolSearchTests < MiniTest::Test
       status, lines = xdotool "search --pid #{@windowpid}"
       assert_equal(0, status, "Exit status should have been 0")
       assert_equal(1, lines.size, "Expect only one match to our search (only one window running that should match)")
-      assert_equal(@wid, lines[0].to_i, "Expected the correct windowid when searching for its pid")
+      assert_equal(@wid, lines[0].to_i(16), "Expected the correct windowid when searching for its pid")
     end
   end
 
@@ -23,7 +23,7 @@ class XdotoolSearchTests < MiniTest::Test
       assert_equal(1, lines.size,
                    "Expect only one match to our search (only one window " \
                    "running that should match)")
-      assert_equal(@wid, lines[0].to_i,
+      assert_equal(@wid, lines[0].to_i(16),
                    "Expected the correct windowid when searching for its pid")
     end
   end
@@ -33,7 +33,7 @@ class XdotoolSearchTests < MiniTest::Test
       status, lines = xdotool "search --onlyvisible --pid #{@windowpid}"
       assert_equal(0, status, "Exit status should have been 0")
       assert_equal(1, lines.size, "Expect only one match to our search (only one window running that should match)")
-      assert_equal(@wid, lines[0].to_i, "Expected the correct windowid when searching for its pid")
+      assert_equal(@wid, lines[0].to_i(16), "Expected the correct windowid when searching for its pid")
     end
 
     try do
@@ -59,7 +59,7 @@ class XdotoolSearchTests < MiniTest::Test
       assert_equal(1, lines.size,
                    "Expect only one match to our search (only one window" \
                    "running that should match)")
-      assert_equal(@wid, lines[0].to_i,
+      assert_equal(@wid, lines[0].to_i(16),
                    "Expected the correct windowid when searching for its pid")
     end
   end
@@ -86,7 +86,7 @@ class XdotoolSearchTests < MiniTest::Test
       status, lines = xdotool "search --name '#{name}'"
       assert_equal(0, status, "Search for name '#{name}' should exit zero")
       assert_equal(1, lines.size, "Search for name '#{name}' have one result")
-      assert(lines.include?(@wid.to_s),
+      assert_equal(lines[0].to_i(16), @wid,
              "Searched results should include our expected window")
     end
   end
@@ -108,7 +108,7 @@ class XdotoolSearchTests < MiniTest::Test
       status, lines = xdotool "search --class '#{name}'"
       assert_equal(0, status, "Search for class '#{name}' should exit zero")
       assert_equal(1, lines.size, "Search for class '#{name}' have one result")
-      assert(lines.include?(@wid.to_s),
+      assert_equal(lines[0].to_i(16), @wid,
              "Searched results should include our expected window")
     end
   end
@@ -130,7 +130,7 @@ class XdotoolSearchTests < MiniTest::Test
       status, lines = xdotool "search --classname '#{name}'"
       assert_equal(0, status, "Search for classname '#{name}' should exit zero")
       assert_equal(1, lines.size, "Search for classname '#{name}' have one result")
-      assert(lines.include?(@wid.to_s),
+      assert_equal(lines[0].to_i(16), @wid,
              "Searched results should include our expected window")
     end
   end
@@ -148,7 +148,7 @@ class XdotoolSearchTests < MiniTest::Test
       #assert_not_equal(0, lines.length, 
                        #"Search for window with --#{query} '^' should have" \
                        #+ " at least one result.")
-      assert_equal(windowdata.sort, lines.collect { |w| w.to_i }.sort, 
+      assert_equal(windowdata.sort, lines.collect { |w| w.to_i(16) }.sort,
                    "Expected same window list from xwininfo and xdotool")
     end # ["name" ... ].each 
   end # def test_search_can_find_all_windows

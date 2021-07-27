@@ -9,7 +9,7 @@ module XdoTestHelper
   end # def setup
 
   def setup_vars
-    @xdotool = "../xdotool"
+    @xdotool = "../boxdotool"
     @title = "#{self.class.name}_#{rand}"
   end # def setup_vars
 

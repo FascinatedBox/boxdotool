@@ -21,7 +21,7 @@ class XdotoolBasicTests < MiniTest::Test
     status, lines = xdotool "getwindowfocus -f"
     assert_status_ok(status)
     assert_equal(1, lines.length, "Only one line of output expected from getwindowfocus")
-    assert_equal(@wid, lines[0].to_i)
+    assert_equal(@wid, lines[0].to_i(16))
   end
 
   def test_windowraise_succeeds_on_valid_window
@@ -82,7 +82,7 @@ class XdotoolBasicTests < MiniTest::Test
       status, lines = xdotool "getwindowfocus -f"
       assert_status_ok(status)
       assert_equal(1, lines.length, "getwindowfocus should have one line of output")
-      assert_equal(@wid, lines.first.to_i,
+      assert_equal(@wid, lines.first.to_i(16),
                    "Our (#{@wid}) window should be focused")
     end
   end
