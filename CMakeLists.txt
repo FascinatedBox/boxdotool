@@ -19,7 +19,7 @@ find_package(
         Xtst
 )
 
-add_library(boxdo_obj OBJECT xdo.c xdo_search.c)
+add_library(boxdo_obj OBJECT xdo.c xdo_search.c xdo_select.c)
 add_library(boxdo SHARED $<TARGET_OBJECTS:boxdo_obj>)
 target_link_libraries(
     boxdo_obj

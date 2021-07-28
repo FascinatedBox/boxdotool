@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <X11/Xlib.h>
 #include <X11/X.h>
+#include <regex.h>
 #include <unistd.h>
 #include <wchar.h>
 
@@ -170,7 +171,7 @@ typedef struct xdo {
 #define SEARCH_ROLE (1UL << 8)
 
 /**
- * The window search query structure.
+ * (Deprecated) The window search query structure.
  *
  * @see xdo_search_windows
  */
@@ -201,6 +202,14 @@ typedef struct xdo_search {
   /** How many results to return? If 0, return all. */
   unsigned int limit;
 } xdo_search_t;
+
+/**
+ * Opaque structure for window selection.
+ *
+ * @see xdo_select_windows
+ */
+struct xdo_select;
+typedef struct xdo_select xdo_select_t;
 
 #define XDO_ERROR 1
 #define XDO_SUCCESS 0
@@ -729,16 +738,82 @@ int xdo_set_desktop_for_window(const xdo_t *xdo, Window wid, long desktop);
  */
 int xdo_get_desktop_for_window(const xdo_t *xdo, Window wid, long *desktop);
 
+xdo_select_t *xdo_select_new(xdo_t *xdo);
+void xdo_select_free(xdo_select_t *);
+
 /**
- * Search for windows.
+ * Set a selection parameter.
  *
- * @param search the search query.
- * @param windowlist_ret the list of matching windows to return
- * @param nwindows_ret the number of windows (length of windowlist_ret)
- * @see xdo_search_t
+ * @param select the selection query.
+ * @param criteria see SEARCH_*.
+ * @param is_pattern 1 if text is a regexp, 0 for exact match.
+ * @param text pattern to match or compare against.
  */
+int xdo_select_set_criteria(xdo_select_t *selection, unsigned int criteria,
+                            int is_pattern, const char *text);
+
+/**
+ * Set a specific desktop to search (default: all desktops)
+ *
+ * @param select the selection query.
+ * @param desktop desktop to use.
+ */
+int xdo_select_set_desktop(xdo_select_t *selection, int desktop);
+
+/**
+ * Set the search limit. Zero for unlimited. (default: unlimited)
+ *
+ * @param select the selection query.
+ * @param limit the limit to use.
+ */
+int xdo_select_set_limit(xdo_select_t *selection, int limit);
+
+/**
+ * Set the max window child depth. Zero for unlimited. (default: unlimited)
+ *
+ * @param select the selection query.
+ * @param max_depth the max depth to use.
+ */
+int xdo_select_set_max_depth(xdo_select_t *selection, int max_depth);
+
+/**
+ * Set if visibility is required (default: yes)
+ *
+ * @param select the selection query.
+ * @param visible 1 if required, 0 otherwise.
+ */
+int xdo_select_set_require_visible(xdo_select_t *selection, int visible);
+
+/**
+ * Set a specific screen to search (default: all screens)
+ *
+ * @param select the selection query.
+ * @param screen screen to use.
+ */
+int xdo_select_set_screen(xdo_select_t *selection, int screen);
+
+
+ /**
+  * (Deprecated) Search for windows.
+  *
+  * @param search the search query.
+  * @param windowlist_ret the list of matching windows to return
+  * @param nwindows_ret the number of windows (length of windowlist_ret)
+ * @see xdo_search_t
+  */
 int xdo_search_windows(const xdo_t *xdo, const xdo_search_t *search,
                       Window **windowlist_ret, unsigned int *nwindows_ret);
+
+/**
+ * Select windows using criteria.
+ *
+ * @param select the selection query.
+ * @param windowlist_ret the list of matching windows to return
+ * @param nwindows_ret the number of windows (length of windowlist_ret)
+ * @see xdo_select_t
+ */
+int xdo_select_windows(xdo_select_t *selection, Window **windowlist_ret,
+                       unsigned int *nwindows_ret);
 
 /**
  * Generic property fetch.

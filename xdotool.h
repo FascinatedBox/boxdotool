@@ -63,6 +63,7 @@ int cmd_mousemove(context_t *context);
 int cmd_mousemove_relative(context_t *context);
 int cmd_mouseup(context_t *context);
 int cmd_search(context_t *context);
+int cmd_select(context_t *context);
 int cmd_set_window(context_t *context);
 int cmd_type(context_t *context);
 int cmd_version(context_t *context);

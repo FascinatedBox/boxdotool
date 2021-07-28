@@ -34,7 +34,6 @@ int ignore_error(Display *dpy, XErrorEvent *xerr);
 int cmd_behave_screen_edge(context_t *context) {
   int ret = 0;
   char *cmd = *context->argv;
-  xdo_search_t search;
   Window *windowlist;
   unsigned int nwindows;
   useconds_t delay = 0;
@@ -107,12 +106,9 @@ int cmd_behave_screen_edge(context_t *context) {
    * or corner is hit */
 
   /* TODO(sissel): Refactor this into libxdo */
-  memset(&search, 0, sizeof(xdo_search_t));
-  search.max_depth = -1;
-  search.require = SEARCH_ANY;
-  search.searchmask = SEARCH_NAME;
-  search.winname = "^"; /* Match anything */
-  xdo_search_windows(context->xdo, &search, &windowlist, &nwindows);
+  xdo_select_t *selection = xdo_select_new(context->xdo);
+  xdo_select_set_require_visible(selection, 0);
+  xdo_select_windows(selection, &windowlist, &nwindows);
   unsigned int i;
   for (i = 0; i < nwindows; i++) {
     XSelectInput(context->xdo->xdpy, windowlist[i], PointerMotionMask | SubstructureNotifyMask);
@@ -308,6 +304,8 @@ int cmd_behave_screen_edge(context_t *context) {
       printf("Command failed.\n");
     }
   } /* while True */
+
+  xdo_select_free(selection);
   return ret;
 } /* int cmd_behave_screen_edge */
 
