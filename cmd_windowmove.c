@@ -6,11 +6,54 @@
 
 struct windowmove {
   Window window;
+  int gravity;
   int x;
   int y;
   int opsync;
   int flags;
 };
+
+#define HELP_GRAVITY \
+  "These are the available gravities:\n" \
+  "\n" \
+  "Northwest\n" \
+  "North\n" \
+  "Northeast\n" \
+  "West\n" \
+  "Center\n" \
+  "East\n" \
+  "Southwest\n" \
+  "South\n" \
+  "Southeast\n" \
+  "Static\n"
+
+int gravity_to_number(const char *gravity)
+{
+  int result = -1;
+
+  if (strcasecmp(gravity, "Northwest") == 0)
+    result = 1;
+  else if (strcasecmp("North", gravity) == 0)
+    result = 2;
+  else if (strcasecmp("Northeast", gravity) == 0)
+    result = 3;
+  else if (strcasecmp("West", gravity) == 0)
+    result = 4;
+  else if (strcasecmp("Center", gravity) == 0)
+    result = 5;
+  else if (strcasecmp("East", gravity) == 0)
+    result = 6;
+  else if (strcasecmp("Southwest", gravity) == 0)
+    result = 7;
+  else if (strcasecmp("South", gravity) == 0)
+    result = 8;
+  else if (strcasecmp("Southeast", gravity) == 0)
+    result = 9;
+  else if (strcasecmp("Static", gravity) == 0)
+    result = 10;
+
+  return result;
+}
 
 /* This function exists because at one time I had problems embedding certain
  * blocks of code within macros (window_each). */
@@ -31,43 +74,70 @@ int cmd_windowmove(context_t *context) {
 
   int c;
   typedef enum {
-    opt_unused, opt_help, opt_sync, opt_relative
+    opt_gravity,
+    opt_relative,
+    opt_sync,
+    opt_help_gravity,
+    opt_help,
   } optlist_t;
   static struct option longopts[] = {
-    { "help", no_argument, NULL, opt_help },
+    { "gravity", required_argument, NULL, opt_gravity },
     { "sync", no_argument, NULL, opt_sync },
     { "relative", no_argument, NULL, opt_relative },
+    { "help-gravity", no_argument, NULL, opt_help_gravity },
+    { "help", no_argument, NULL, opt_help },
     { 0, 0, 0, 0 },
   };
   static const char *usage =
     "Usage: %s [options] [window=%1] x y\n"
-    "--sync      - only exit once the window has moved\n"
-    "--relative  - make movements relative to the current window position"
+    "--gravity <g>       specify a gravity for the movement\n"
+    "                    see --help-gravity for values\n"
+    "--sync              only exit once the window has moved\n"
+    "--relative          move relative to window position\n"
+    "-h/--help           display this help and exit\n"
     "\n"
     "If you use literal 'x' or 'y' for the x coordinates, then the current\n"
     "coordinate will be used. This is useful for moving the window along\n"
-    "only one axis.\n";
+    "only one axis.\n"
+    ;
 
   int option_index;
   while ((c = getopt_long_only(context->argc, context->argv, "+h",
                                longopts, &option_index)) != -1) {
     switch (c) {
+      case opt_gravity:
+        windowmove.gravity = gravity_to_number(optarg);
+
+        if (windowmove.gravity == -1) {
+          fprintf(stderr, "windowmove: Invalid gravity %s.\n", optarg);
+          return EXIT_FAILURE;
+        }
+        break;
+      case opt_relative:
+        windowmove.flags |= WINDOWMOVE_RELATIVE;
+        break;
+      case opt_sync:
+        windowmove.opsync = 1;
+        break;
+      case opt_help_gravity:
+        puts(HELP_GRAVITY);
+        consume_args(context, context->argc);
+        return EXIT_SUCCESS;
       case 'h':
       case opt_help:
         printf(usage, cmd);
         consume_args(context, context->argc);
         return EXIT_SUCCESS;
         break;
-      case opt_sync:
-        windowmove.opsync = 1;
-        break;
-      case opt_relative:
-        windowmove.flags |= WINDOWMOVE_RELATIVE;
-        break;
       default:
         fprintf(stderr, usage, cmd);
         return EXIT_FAILURE;
     }
+  }
+
+  if (windowmove.flags & WINDOWMOVE_RELATIVE && windowmove.gravity) {
+    fputs("windowmove: Cannot mix --relative and --gravity.", stderr);
+    return EXIT_FAILURE;
   }
 
   consume_args(context, optind);
@@ -148,6 +218,7 @@ static int _windowmove(context_t *context, struct windowmove *windowmove) {
     }
   }
 
+  int target_gravity = windowmove->gravity;
   int target_x = windowmove->x;
   int target_y = windowmove->y;
 
@@ -168,7 +239,8 @@ static int _windowmove(context_t *context, struct windowmove *windowmove) {
   }
 
 
-  ret = xdo_move_window(context->xdo, windowmove->window, target_x, target_y);
+  ret = xdo_move_window(context->xdo, windowmove->window, target_gravity,
+                        target_x, target_y);
   if (ret) {
     fprintf(stderr,
             "xdo_move_window reported an error while moving window %ld\n",

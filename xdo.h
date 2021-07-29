@@ -457,10 +457,11 @@ int xdo_wait_for_window_size(const xdo_t *xdo, Window window, unsigned int width
  * The top left corner of the window will be moved to the x,y coordinate.
  *
  * @param wid the window to move
+ * @param gravity the gravity to use (0 for the window's default gravity)
  * @param x the X coordinate to move to.
  * @param y the Y coordinate to move to.
  */
-int xdo_move_window(const xdo_t *xdo, Window wid, int x, int y);
+int xdo_move_window(const xdo_t *xdo, Window wid, int gravity, int x, int y);
 
 /**
  * Apply a window's sizing hints (if any) to a given width and height.

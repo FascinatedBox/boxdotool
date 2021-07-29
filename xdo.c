@@ -246,14 +246,40 @@ int xdo_get_window_size(const xdo_t *xdo, Window wid, unsigned int *width_ret,
   return _is_success("XGetWindowAttributes", ret == 0, xdo);
 }
 
-int xdo_move_window(const xdo_t *xdo, Window wid, int x, int y) {
-  XWindowChanges wc;
-  int ret = 0;
-  wc.x = x;
-  wc.y = y;
+int xdo_move_window(const xdo_t *xdo, Window wid, int gravity, int x, int y) {
+  if (gravity) {
+    XEvent event;
+    long mask = SubstructureRedirectMask | SubstructureNotifyMask;
+    Atom a = XInternAtom(xdo->xdpy, "_NET_MOVERESIZE_WINDOW", False);
+    unsigned long grflags = gravity;
 
-  ret = XConfigureWindow(xdo->xdpy, wid, CWX | CWY, &wc);
-  return _is_success("XConfigureWindow", ret == 0, xdo);
+    grflags |= (1 << 8) | (1 << 9);
+
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = a;
+    event.xclient.window = wid;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = grflags;
+    event.xclient.data.l[1] = (unsigned long)x;
+    event.xclient.data.l[2] = (unsigned long)y;
+    event.xclient.data.l[3] = 0;
+    event.xclient.data.l[4] = 0;
+
+    int ret = XSendEvent(xdo->xdpy, DefaultRootWindow(xdo->xdpy), False, mask,
+                      &event);
+
+    return _is_success("XSendEvent[EWMH:_NET_MOVERESIZE_WINDOW]", ret == 0, xdo);
+  }
+  else {
+    XWindowChanges wc;
+    wc.x = x;
+    wc.y = y;
+
+    int ret = XConfigureWindow(xdo->xdpy, wid, CWX | CWY, &wc);
+    return _is_success("XConfigureWindow", ret == 0, xdo);
+  }
 }
 
 int xdo_translate_window_with_sizehint(const xdo_t *xdo, Window window,
