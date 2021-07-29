@@ -49,3 +49,5 @@ if(WITH_DOCS)
         VERBATIM
     )
 endif(WITH_DOCS)
+
+install(TARGETS boxdotool DESTINATION bin)
