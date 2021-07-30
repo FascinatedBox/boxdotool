@@ -33,7 +33,7 @@ class XdotoolMouseMoveTests < MiniTest::Test
           assert_mouse_position(x, y)
         end
       end # x_list.each
-    end # y_list.each 
+    end # y_list.each
   end # def test_mousemove
 
   def test_mousemove_with_sync
@@ -45,7 +45,7 @@ class XdotoolMouseMoveTests < MiniTest::Test
         status, lines = xdotool_ok "mousemove --sync #{x} #{y}"
         assert_mouse_position(x, y)
       end # x_list.each
-    end # y_list.each 
+    end # y_list.each
   end # def test_mousemove
 
   def test_mousemove_polar
@@ -83,7 +83,7 @@ class XdotoolMouseMoveTests < MiniTest::Test
         status, lines = xdotool_ok "mousemove_relative --sync -- #{x} #{y}"
         assert_mouse_position_near(start_x + x, start_y + y)
       end # x_list.each
-    end # y_list.each 
+    end # y_list.each
   end
 
   def test_mousemove_relative_polar

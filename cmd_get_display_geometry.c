@@ -8,7 +8,7 @@ int cmd_get_display_geometry(context_t *context) {
   int screen = DefaultScreen(context->xdo->xdpy);
   int shell_output = False;
 
-  typedef enum { 
+  typedef enum {
     opt_unused, opt_help, opt_screen, opt_shell
   } optlist_t;
   static struct option longopts[] = {

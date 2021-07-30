@@ -10,7 +10,7 @@ int cmd_windowraise(context_t *context) {
     { "help", no_argument, NULL, 'h' },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [window=%1]\n"
     HELP_SEE_WINDOW_STACK;
   int option_index;

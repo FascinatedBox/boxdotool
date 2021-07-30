@@ -33,7 +33,7 @@ int cmd_key(context_t *context) {
     { 0, 0, 0, 0 },
   };
 
-  static const char *usage = 
+  static const char *usage =
      "Usage: %s [options] <keysequence> [keysequence ...]\n"
      "--clearmodifiers     - clear active keyboard modifiers during keystrokes\n"
      "--delay DELAY        - Use DELAY milliseconds between keystrokes\n"

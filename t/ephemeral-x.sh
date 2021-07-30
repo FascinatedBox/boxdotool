@@ -3,7 +3,7 @@
 #
 # This is useful for when you want to launch an X server for a specific
 # process. When that process exits, the X server will be killed.
-# 
+#
 
 XSERVER=Xvfb
 WINMGR=
@@ -97,7 +97,7 @@ if ! which "$XSERVERNAME" > /dev/null 2>&1 ; then
   exit 1
 fi
 
-while true; do 
+while true; do
   num=$(expr $num + 1)
   xsocket=/tmp/.X11-unix/X$num
   quiet || echo "Trying :$num"
@@ -160,7 +160,7 @@ if [ ! -z "$WINMGR" -a "$WINMGR" != "none" ] ; then
   # Wait for the window manager to startup
   quiet || echo "Waiting for window manager '$WINMGRNAME' to be healthy."
   # Wait for the window manager to start.
-  for i in 1 2 3 4 5 6 7 8 9 10 ABORT ; do 
+  for i in 1 2 3 4 5 6 7 8 9 10 ABORT ; do
     # A good signal that the WM has started is that the WM_STATE property is
     # set or that any NETWM/ICCCM property is set.
     if xprop -root | egrep -q 'WM_STATE|^_NET' ; then

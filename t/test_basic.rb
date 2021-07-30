@@ -126,7 +126,7 @@ class XdotoolBasicTests < MiniTest::Test
     status, lines = xdotool "windowmap #{@wid}"
     assert_status_ok(status)
     assert_equal(0, lines.length, "windowmap should have no output")
- 
+
     try do
       status, lines = runcmd("xwininfo -id #{@wid}")
       state = lines.grep(/Map State: /).first[/Is(UnMapped|Viewable)/]

@@ -13,7 +13,7 @@ int cmd_getwindowfocus(context_t *context) {
     { NULL, no_argument, NULL, 'f' },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [-f]\n"
     "-f     - Report the window with focus even if we don't think it is a \n"
     "         top-level window. The default is to find the top-level window\n"
@@ -52,7 +52,7 @@ int cmd_getwindowfocus(context_t *context) {
 
   if (ret) {
     fprintf(stderr, "xdo_focus_window reported an error\n");
-  } else { 
+  } else {
     /* only print if we're the last command */
     if (context->argc == 0) {
       window_print(window);

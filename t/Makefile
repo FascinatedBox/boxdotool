@@ -8,11 +8,11 @@ XEPHYR_TESTS?=test-xephyr-nowm test-xephyr-openbox test-xephyr-gnome
 
 all-headless: $(HEADLESS_TESTS)
 all-xephyr: $(XEPHYR_TESTS)
-all: all-headless all-xephyr 
+all: all-headless all-xephyr
 
 test: all
 
-# The loop-* targets are mainly for spinning until a test fails 
+# The loop-* targets are mainly for spinning until a test fails
 # so we can look for flakey tests.
 loop-headless:
 	while $(MAKE) $(MAKEARGS) all-headless; do true; done
@@ -31,7 +31,7 @@ do-test:
 	for i in test_*.rb ; do \
 	  echo "Running $$i"; \
 	  sh ephemeral-x.sh -q -x "$$XSERVER" -w "$$WM" ./run.sh ruby $(RUBYFLAGS) $$i $(TESTFLAGS); \
-	done 
+	done
 
 #sh ephemeral-x.sh -q -x "$$XSERVER" -w "$$WM" ./run.sh -- ruby alltests.rb
 

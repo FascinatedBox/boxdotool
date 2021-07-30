@@ -24,7 +24,7 @@ int cmd_exec(context_t *context) {
     { "terminator", required_argument, NULL, opt_terminator },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [options] command [arg1 arg2 ...] [terminator]\n"
     "--sync    - only exit when the command given finishes. The default\n"
     "            is to fork a child process and continue.\n"
@@ -37,7 +37,7 @@ int cmd_exec(context_t *context) {
     "\n"
     "Unless --args OR --terminator is specified, the exec command is assumed\n"
     "to be the remainder of the command line.\n";
-  
+
   int option_index;
   while ((c = getopt_long_only(context->argc, context->argv, "+h",
                                longopts, &option_index)) != -1) {
@@ -100,7 +100,7 @@ int cmd_exec(context_t *context) {
     xdotool_debug(context, "Exec arg[%d]: %s", i, command[i]);
   }
   command[i] = NULL;
-  
+
   pid_t child;
   child = fork();
   if (child == 0) { /* child */

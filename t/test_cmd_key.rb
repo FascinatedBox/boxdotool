@@ -45,5 +45,5 @@ class XdotoolCommandKeyTests < MiniTest::Test
     xdotool_ok "getwindowfocus -f key --window %1 a b c d e"
     xdotool_ok "getwindowfocus -f key --window %@ a b c d e"
   end
-end # class XdotoolCommandKeyTests 
+end # class XdotoolCommandKeyTests
 

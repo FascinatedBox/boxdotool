@@ -15,7 +15,7 @@ int cmd_windowunmap(context_t *context) {
     { "sync", no_argument, NULL, opt_sync },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [--sync] [window=%1]\n"
     "--sync    - only exit once the window has been unmapped (is hidden)\n"
     HELP_SEE_WINDOW_STACK;
@@ -40,7 +40,7 @@ int cmd_windowunmap(context_t *context) {
   }
 
   consume_args(context, optind);
-  
+
   if (!window_get_arg(context, 0, 0, &window_arg)) {
     fprintf(stderr, usage, cmd);
     return EXIT_FAILURE;

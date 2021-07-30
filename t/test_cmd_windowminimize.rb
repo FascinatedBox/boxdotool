@@ -8,7 +8,7 @@ class XdotoolCommandWindowMinimizeTests < MiniTest::Test
   include XdoTestHelper
 
   def test_succeeds_with_valid_window
-    if wm_supports?("_NET_WM_STATE") 
+    if wm_supports?("_NET_WM_STATE")
       puts "Skipping minimize tests (current wm does not support it _NET_WM_STATE)"
       return
     end
@@ -16,7 +16,7 @@ class XdotoolCommandWindowMinimizeTests < MiniTest::Test
   end # def test_succeeds_with_valid_window
 
   def test_expected_failures
-    if wm_supports?("_NET_WM_STATE") 
+    if wm_supports?("_NET_WM_STATE")
       puts "Skipping minimize tests (current wm does not support it _NET_WM_STATE)"
       return
     end
@@ -27,7 +27,7 @@ class XdotoolCommandWindowMinimizeTests < MiniTest::Test
   end # def test_fails_without_a_window
 
   def test_chaining
-    if wm_supports?("_NET_WM_STATE") 
+    if wm_supports?("_NET_WM_STATE")
       puts "Skipping minimize tests (current wm does not support it _NET_WM_STATE)"
       return
     end

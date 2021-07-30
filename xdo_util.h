@@ -1,10 +1,10 @@
-/* xdo utility pieces 
+/* xdo utility pieces
  *
  * $Id$
  */
 
-#ifndef _XDO_UTIL_H_
-#define _XDO_UTIL_H_
+#ifndef _XDO_UTIL_H
+#define _XDO_UTIL_H
 
 #include "xdo.h"
 

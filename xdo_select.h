@@ -1,5 +1,5 @@
-#ifndef _XDO_SELECT_H_
-#define _XDO_SELECT_H_
+#ifndef _XDO_SELECT_H
+#define _XDO_SELECT_H
 
 #include <regex.h>
 #include "xdo.h"

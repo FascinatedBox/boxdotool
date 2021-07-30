@@ -94,7 +94,7 @@ int cmd_mousemove_relative(context_t *context) {
      * is ascending */
     y = (-sin(radians) * distance);
   }
- 
+
   if (clear_modifiers) {
     xdo_get_active_modifiers(context->xdo, &active_mods, &active_mods_n);
     xdo_clear_active_modifiers(context->xdo, CURRENTWINDOW, active_mods, active_mods_n);

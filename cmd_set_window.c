@@ -28,7 +28,7 @@ int cmd_set_window(context_t *context) {
     { 0, 0, 0, 0 },
   };
   int option_index;
-  static const char *usage = 
+  static const char *usage =
       "Usage: %s [options] [window=%1]\n"
       "--name NAME  - set the window name (aka title)\n"
       "--icon-name NAME - set the window name while minimized/iconified\n"
@@ -43,8 +43,8 @@ int cmd_set_window(context_t *context) {
   while ((c = getopt_long_only(context->argc, context->argv, "+hn:i:r:C:N:u:",
                                longopts, &option_index)) != -1) {
     switch(c) {
-      case 'n': 
-        name = strdup(optarg); 
+      case 'n':
+        name = strdup(optarg);
         break;
       case 'i':
         icon = strdup(optarg);
@@ -71,7 +71,7 @@ int cmd_set_window(context_t *context) {
       default:
         fprintf(stderr, usage, cmd);
         return EXIT_FAILURE;
-    }    
+    }
   }
 
   /* adjust context->argc, argv */

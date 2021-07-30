@@ -79,5 +79,5 @@ class XdotoolChainingTests < MiniTest::Test
       xdotool_ok "#{cmd} #{cmd}"
     end
   end # def test_multicommands_do_not_fail
-end # end 
+end # end
 

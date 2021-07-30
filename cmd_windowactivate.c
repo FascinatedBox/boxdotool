@@ -15,7 +15,7 @@ int cmd_windowactivate(context_t *context) {
     { "sync", no_argument, NULL, opt_sync },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [options] [window=%1]\n"
     "--sync    - only exit once the window is active (is visible + active)\n"
     HELP_SEE_WINDOW_STACK;

@@ -28,7 +28,7 @@ int cmd_behave(context_t *context) {
     { "help", no_argument, NULL, opt_help },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s window event action [args...]\n"
     "The event is a window event, such as mouse-enter, resize, etc.\n"
     "The action is any valid xdotool command (chains OK here)\n"

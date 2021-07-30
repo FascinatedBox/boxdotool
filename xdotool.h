@@ -1,5 +1,5 @@
-#ifndef _XDOTOOL_H_
-#define _XDOTOOL_H_
+#ifndef _XDOTOOL_H
+#define _XDOTOOL_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,7 +22,7 @@ extern "C" {
   } \
 } /* end define window_each */
 
-  
+
 
 typedef struct context {
   xdo_t *xdo;

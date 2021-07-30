@@ -17,7 +17,7 @@
  *
  * Possible improvements to this could be to select ConfigureNotify so
  * we can be told of window size changes rather than querying the root
- * window size every time. 
+ * window size every time.
  */
 extern int context_execute(context_t *context);
 
@@ -26,7 +26,7 @@ typedef enum {
   bottom_right, bottom, bottom_left,
 } edge_or_corner;
 
-int is_edge_or_corner(const xdo_t *xdo, const edge_or_corner what, 
+int is_edge_or_corner(const xdo_t *xdo, const edge_or_corner what,
                       const Window window, const unsigned int x,
                       const unsigned int y);
 int ignore_error(Display *dpy, XErrorEvent *xerr);
@@ -50,7 +50,7 @@ int cmd_behave_screen_edge(context_t *context) {
     { "quiesce", required_argument, NULL, opt_quiesce },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [options] edge-or-corner action [args...]\n"
     "--delay MILLISECONDS     - delay before activating. During this time,\n"
     "        your mouse must stay in the area selected (corner or edge)\n"
@@ -135,7 +135,7 @@ int cmd_behave_screen_edge(context_t *context) {
     fprintf(stderr, "Invalid edge or corner, '%s'\n", edge_or_corner_spec);
     fprintf(stderr, usage, cmd);
     return EXIT_FAILURE;
-  } 
+  }
 
   int need_new_context = True;
   context_t *tmpcontext = NULL;
@@ -161,7 +161,7 @@ int cmd_behave_screen_edge(context_t *context) {
     XEvent e;
     e.type = 0; /* clear event */
 
-    fd_set fdset_copy = fdset; 
+    fd_set fdset_copy = fdset;
     int ready = 0;
 
     /* TODO(sissel): use select, not XNextEvent */
@@ -286,7 +286,7 @@ int cmd_behave_screen_edge(context_t *context) {
       timerclear(&triggertime);
       if (quiesce > 0) {
         /* TODO(sissel): refactor clock_gettime calls */
-        clock_gettime(CLOCK_MONOTONIC, &now); 
+        clock_gettime(CLOCK_MONOTONIC, &now);
         quiesceuntil.tv_sec = now.tv_sec;
         quiesceuntil.tv_usec = now.tv_nsec / 1000;
         timeradd(&quiesceuntil, &quiescetime, &quiesceuntil);
@@ -309,7 +309,7 @@ int cmd_behave_screen_edge(context_t *context) {
   return ret;
 } /* int cmd_behave_screen_edge */
 
-int is_edge_or_corner(const xdo_t *xdo, const edge_or_corner what, 
+int is_edge_or_corner(const xdo_t *xdo, const edge_or_corner what,
                       const Window window, const unsigned int x,
                       const unsigned int y) {
   unsigned int width;

@@ -1,6 +1,6 @@
 
-#ifndef _XDO_CMD_H_
-#define _XDO_CMD_H_
+#ifndef _XDO_CMD_H
+#define _XDO_CMD_H
 
 #define _GNU_SOURCE 1
 #ifndef __USE_BSD

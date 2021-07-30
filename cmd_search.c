@@ -221,7 +221,7 @@ int cmd_search(context_t *context) {
   context->windows = list;
   context->nwindows = nwindows;
 
-  /* error if number of windows found is zero (behave like grep) 
+  /* error if number of windows found is zero (behave like grep)
   but return success when being used inside eval (--shell option)*/
   return (nwindows || out_shell ? EXIT_SUCCESS : EXIT_FAILURE);
 }

@@ -46,7 +46,7 @@ int cmd_mousemove(context_t *context) {
     { "window", required_argument, NULL, opt_window },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
       "Usage: %s [options] <x> <y>\n"
       "-c, --clearmodifiers      - reset active modifiers (alt, etc) while typing\n"
       //"-d, --delay <MS>          - sleeptime in milliseconds between steps.\n"
@@ -111,7 +111,7 @@ int cmd_mousemove(context_t *context) {
       fprintf(stderr, "Have no previous mouse position. Cannot restore.\n");
       return EXIT_FAILURE;
     }
-    
+
     mousemove.x = context->last_mouse_x;
     mousemove.y = context->last_mouse_y;
     mousemove.screen = context->last_mouse_screen;
@@ -150,7 +150,7 @@ static int _mousemove(context_t *context, struct mousemove *mousemove) {
     xdo_get_mouse_location(context->xdo, &(context->last_mouse_x),
                       &(context->last_mouse_y), &(context->last_mouse_screen));
   }
-  
+
   if (mousemove->polar_coordinates) {
     /* x becomes angle (degrees), y becomes distance.
      * XXX: Origin should be center (of window or screen)
@@ -202,7 +202,7 @@ static int _mousemove(context_t *context, struct mousemove *mousemove) {
       /* Nothing to move. Quit now. */
       return 0;
     }
-    
+
     fprintf(stderr, "--step support not yet implemented\n");
 
     if (window > 0) {

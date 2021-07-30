@@ -16,7 +16,7 @@ int cmd_getwindowgeometry(context_t *context) {
     { "prefix", required_argument, NULL, 'p' },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [window=%1] [--shell] [--prefix <STR>]\n"
     "--shell      - output shell variables for use with eval\n"
     "--prefix STR - use prefix for shell variables names (max 16 chars) \n"

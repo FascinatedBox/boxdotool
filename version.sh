@@ -18,7 +18,7 @@ VERSION="$MAJOR.$RELEASE.$REVISION"
 
 case $1 in
   --major) echo "$MAJOR" ;;
-  --header) 
+  --header)
     echo "#ifndef _VERSION_H_"
     echo "#define _VERSION_H_"
     echo "static const char *XDO_VERSION = \"$VERSION\";"

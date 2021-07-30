@@ -11,7 +11,7 @@ int cmd_set_desktop_for_window(context_t *context) {
     { "help", no_argument, NULL, 'h' },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s [window=%1] <desktop>\n"
     HELP_SEE_WINDOW_STACK;
   int option_index;
@@ -43,8 +43,8 @@ int cmd_set_desktop_for_window(context_t *context) {
   window_each(context, window_arg, {
     ret = xdo_set_desktop_for_window(context->xdo, window, desktop);
     if (ret != XDO_SUCCESS) {
-      fprintf(stderr, 
-              "xdo_set_desktop_for_window on window %ld, desktop %ld failed\n", 
+      fprintf(stderr,
+              "xdo_set_desktop_for_window on window %ld, desktop %ld failed\n",
               window, desktop);
       return ret;
     }

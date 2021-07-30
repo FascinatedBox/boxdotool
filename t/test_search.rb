@@ -73,13 +73,13 @@ class XdotoolSearchTests < MiniTest::Test
   def test_search_by_name
     name = "name#{rand}"
     status, lines = xdotool "search --name '#{name}'"
-    assert_equal(1, status, 
+    assert_equal(1, status,
                  "Search for window with name '#{name}' exit nonzero when" \
                  + " no window with that name exists")
-    assert_equal(0, lines.length, 
+    assert_equal(0, lines.length,
                  "Search for window with name '#{name}' should have no results when" \
                  + " no window with that name exists")
-                  
+
 
     xdotool "set_window --name '#{name}' #{@wid}"
     try do
@@ -94,13 +94,13 @@ class XdotoolSearchTests < MiniTest::Test
   def test_search_by_class
     name = "class#{rand}"
     status, lines = xdotool "search --class '#{name}'"
-    assert_equal(1, status, 
+    assert_equal(1, status,
                  "Search for window with class '#{name}' exit nonzero when" \
                  + " no window with that class exists")
-    assert_equal(0, lines.length, 
+    assert_equal(0, lines.length,
                  "Search for window with class '#{name}' should have no results when" \
                  + " no window with that class exists")
-                  
+
 
     xdotool "set_window --class '#{name}' #{@wid}"
 
@@ -116,13 +116,13 @@ class XdotoolSearchTests < MiniTest::Test
   def test_search_by_classname
     name = "classname#{rand}"
     status, lines = xdotool "search --classname '#{name}'"
-    assert_equal(1, status, 
+    assert_equal(1, status,
                  "Search for window with classname '#{name}' exit nonzero when" \
                  + " no window with that classname exists")
-    assert_equal(0, lines.length, 
+    assert_equal(0, lines.length,
                  "Search for window with classname '#{name}' should have no results when" \
                  + " no window with that classname exists")
-                  
+
 
     xdotool "set_window --classname '#{name}' #{@wid}"
 
@@ -134,7 +134,7 @@ class XdotoolSearchTests < MiniTest::Test
              "Searched results should include our expected window")
     end
   end
-  
+
   def test_search_can_find_all_windows
     name = "searchall#{rand}"
     windowdata = %x{xwininfo -tree -root}.split("\n") \
@@ -142,14 +142,14 @@ class XdotoolSearchTests < MiniTest::Test
       .collect { |l| l[/0x[0-9A-Fa-f]+/].to_i(16) }
     ["name", "class", "classname"].each do |query|
       status, lines = xdotool "search --#{query} '^'"
-      assert_equal(0, status, 
+      assert_equal(0, status,
                    "Search for window with --#{query} '^' should exit" \
                    + " with status zero.")
-      #assert_not_equal(0, lines.length, 
+      #assert_not_equal(0, lines.length,
                        #"Search for window with --#{query} '^' should have" \
                        #+ " at least one result.")
       assert_equal(windowdata.sort, lines.collect { |w| w.to_i(16) }.sort,
                    "Expected same window list from xwininfo and xdotool")
-    end # ["name" ... ].each 
+    end # ["name" ... ].each
   end # def test_search_can_find_all_windows
 end # XdotoolSearchTests

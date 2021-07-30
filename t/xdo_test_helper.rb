@@ -41,7 +41,7 @@ module XdoTestHelper
       sleep 0.2
     end
   end # def setup_launch_xterm
-  
+
   def setup_ensure_x_is_healthy
     healthy = false
     (1 .. 10).each do
@@ -115,7 +115,7 @@ module XdoTestHelper
   def detect_window_manager
     status, lines = runcmd("xprop -root")
     #puts lines.join("\n")
-    
+
     # ion
     if lines.grep(/^_ION_WORKSPACE/).length > 0
       return :ion
@@ -175,9 +175,9 @@ module XdoTestHelper
 
   def assert_mouse_position_near(x, y, tolerance=5)
     mx, my = get_mouse_position
-    assert_in_delta(mx, x, tolerance, 
+    assert_in_delta(mx, x, tolerance,
         "Mouse X position expected to be near #{x}, is #{mx} (+- #{tolerance} pixels)")
-    assert_in_delta(my, y, tolerance, 
+    assert_in_delta(my, y, tolerance,
         "Mouse Y position expected to be near #{y}, is #{my} (+- #{tolerance} pixels)")
   end # def assert_mouse_position
 end # module XdoTestHelper

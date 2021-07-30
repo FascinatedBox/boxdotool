@@ -15,7 +15,7 @@ int cmd_set_desktop(context_t *context) {
     { "relative", no_argument, NULL, opt_relative },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
     "Usage: %s desktop\n"
     "--relative    - Move relative to the current desktop. Negative values OK\n";
   int option_index;
@@ -57,7 +57,7 @@ int cmd_set_desktop(context_t *context) {
     desktop = (desktop + cur_desktop) % ndesktops;
 
     /* negative mod doesn't result in a positive number. Fix that. */
-    if (desktop < 0) 
+    if (desktop < 0)
       desktop += ndesktops;
   }
 

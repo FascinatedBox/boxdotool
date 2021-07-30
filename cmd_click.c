@@ -13,7 +13,7 @@ int cmd_click(context_t *context) {
   int repeat = 1;
 
   int c;
-  typedef enum { 
+  typedef enum {
     opt_unused, opt_help, opt_clearmodifiers, opt_window, opt_delay,
     opt_repeat
   } optlist_t;
@@ -25,7 +25,7 @@ int cmd_click(context_t *context) {
     { "repeat", required_argument, NULL, opt_repeat },
     { 0, 0, 0, 0 },
   };
-  static const char *usage = 
+  static const char *usage =
             "Usage: %s [options] <button>\n"
             "--clearmodifiers       - reset active modifiers (alt, etc) while typing\n"
             "--window WINDOW        - specify a window to send click to\n"
@@ -63,7 +63,7 @@ int cmd_click(context_t *context) {
       case 'r':
       case opt_repeat:
         repeat = atoi(optarg);
-        if (repeat <= 0) { 
+        if (repeat <= 0) {
           fprintf(stderr, "Invalid repeat value '%s' (must be >= 1)\n", optarg);
           fprintf(stderr, usage, cmd);
           return EXIT_FAILURE;

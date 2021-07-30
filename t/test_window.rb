@@ -38,7 +38,7 @@ class XdotoolWindowTests < MiniTest::Test
     assert_equal(0, lines.length, "set_window should have no output")
 
     xprop_status, xprop_output = runcmd("xprop -id #{@wid}")
-    assert_send([xprop_output, :include?, 
+    assert_send([xprop_output, :include?,
                 "WM_CLASS(STRING) = \"#{classname}\", \"#{_class}\""],
                 "xprop should report the WM_CLASS as the value we set")
   end
