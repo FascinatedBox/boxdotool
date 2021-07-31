@@ -1,8 +1,3 @@
-/* xdo utility pieces
- *
- * $Id$
- */
-
 #ifndef _XDO_UTIL_H
 #define _XDO_UTIL_H
 
