@@ -46,4 +46,3 @@ int cmd_windowkill(context_t *context) {
 
   return ret;
 } /* int cmd_windowkill(context_t *) */
-

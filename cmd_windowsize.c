@@ -135,4 +135,3 @@ int cmd_windowsize(context_t *context) {
 
   return ret;
 }
-

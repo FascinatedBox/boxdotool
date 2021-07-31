@@ -46,4 +46,3 @@ int cmd_windowraise(context_t *context) {
 
   return ret;
 } /* int cmd_windowraise(context_t *) */
-

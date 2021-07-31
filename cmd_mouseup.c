@@ -78,4 +78,3 @@ int cmd_mouseup(context_t *context) {
   consume_args(context, 1);
   return ret;
 }
-

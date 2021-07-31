@@ -158,4 +158,3 @@ int cmd_behave(context_t *context) {
   }
   return ret;
 }
-

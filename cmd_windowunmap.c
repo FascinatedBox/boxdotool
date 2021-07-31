@@ -59,4 +59,3 @@ int cmd_windowunmap(context_t *context) {
 
   return ret;
 }
-

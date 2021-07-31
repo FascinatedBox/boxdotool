@@ -80,4 +80,3 @@ int cmd_getwindowgeometry(context_t *context) {
   }); /* window_each(...) */
   return EXIT_SUCCESS;
 }
-

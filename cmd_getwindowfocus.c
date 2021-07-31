@@ -62,4 +62,3 @@ int cmd_getwindowfocus(context_t *context) {
 
   return ret;
 }
-

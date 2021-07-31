@@ -38,4 +38,3 @@ int cmd_set_num_desktops(context_t *context) {
   consume_args(context, 1);
   return xdo_set_number_of_desktops(context->xdo, ndesktops);
 }
-

@@ -43,4 +43,3 @@ int cmd_window_select(context_t *context) {
 
   return ret;
 }
-

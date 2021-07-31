@@ -43,4 +43,3 @@ int cmd_getactivewindow(context_t *context) {
 
   return ret;
 }
-

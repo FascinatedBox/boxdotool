@@ -122,4 +122,3 @@ int cmd_mousemove_relative(context_t *context) {
 
   return ret;
 }
-

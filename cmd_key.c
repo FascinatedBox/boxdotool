@@ -155,4 +155,3 @@ int cmd_key(context_t *context) {
 
   return ret;
 }
-

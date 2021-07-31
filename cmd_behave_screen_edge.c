@@ -339,4 +339,3 @@ int ignore_error(Display *dpy, XErrorEvent *xerr) {
   xerr = xerr;
   return 0;
 }
-

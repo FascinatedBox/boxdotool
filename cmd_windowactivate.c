@@ -61,4 +61,3 @@ int cmd_windowactivate(context_t *context) {
 
   return ret;
 }
-

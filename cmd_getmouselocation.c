@@ -60,4 +60,3 @@ int cmd_getmouselocation(context_t *context) {
   }
   return ret;
 }
-

@@ -100,4 +100,3 @@ int cmd_set_window(context_t *context) {
 
   return 0;
 }
-

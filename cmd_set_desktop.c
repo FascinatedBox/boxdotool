@@ -63,4 +63,3 @@ int cmd_set_desktop(context_t *context) {
 
   return xdo_set_current_desktop(context->xdo, desktop);
 }
-

@@ -207,4 +207,3 @@ int cmd_type(context_t *context) {
   consume_args(context, args_count);
   return ret > 0;
 }
-

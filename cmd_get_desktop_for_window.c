@@ -43,4 +43,3 @@ int cmd_get_desktop_for_window(context_t *context) {
   }); /* window_each(...) */
   return ret;
 }
-

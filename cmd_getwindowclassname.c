@@ -44,4 +44,3 @@ int cmd_getwindowclassname(context_t *context) {
   }); /* window_each(...) */
   return EXIT_SUCCESS;
 }
-
