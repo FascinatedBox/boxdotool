@@ -4,7 +4,6 @@
 #endif /* __USE_BSD */
 #include <string.h>
 
-
 #include "xdo_cmd.h"
 
 int cmd_set_window(context_t *context) {

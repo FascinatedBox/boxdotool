@@ -211,7 +211,6 @@ void window_list(context_t *context, const char *window_arg,
   }
 }
 
-
 struct dispatch {
   const char *name;
   int (*func)(context_t *context);
@@ -489,7 +488,6 @@ int script_main(int argc, char **argv) {
     }
   }
   fclose(input);
-
 
   xdo_free(context.xdo);
   if (context.windows != NULL) {

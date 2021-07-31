@@ -222,7 +222,6 @@ static int _windowmove(context_t *context, struct windowmove *windowmove) {
   int target_x = windowmove->x;
   int target_y = windowmove->y;
 
-
   if (windowmove->flags & WINDOWMOVE_RELATIVE) {
     target_x = orig_win_x + windowmove->x;
     target_y = orig_win_y + windowmove->y;
@@ -237,7 +236,6 @@ static int _windowmove(context_t *context, struct windowmove *windowmove) {
     target_y = orig_win_y;
     xdotool_debug(context, "Using %d for y\n", windowmove->y);
   }
-
 
   ret = xdo_move_window(context->xdo, windowmove->window, target_gravity,
                         target_x, target_y);

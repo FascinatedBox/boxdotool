@@ -122,7 +122,6 @@ int cmd_mousemove(context_t *context) {
     consume_args(context, 2);
   }
 
-
   window_each(context, window_arg, {
     mousemove.window = window;
     ret = _mousemove(context, &mousemove);
@@ -184,7 +183,6 @@ static int _mousemove(context_t *context, struct mousemove *mousemove) {
 
   int mx, my, mscreen;
   xdo_get_mouse_location(context->xdo, &mx, &my, &mscreen);
-
 
   if (mousemove->clear_modifiers) {
     xdo_get_active_modifiers(context->xdo, &active_mods, &active_mods_n);

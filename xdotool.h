@@ -22,8 +22,6 @@ extern "C" {
   } \
 } /* end define window_each */
 
-
-
 typedef struct context {
   xdo_t *xdo;
   const char *prog;

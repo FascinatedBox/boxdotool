@@ -113,7 +113,6 @@ typedef struct xdo {
 
 } xdo_t;
 
-
 /**
  * Search only window title. DEPRECATED - Use SEARCH_NAME
  * @see xdo_search_windows
@@ -430,7 +429,6 @@ int xdo_send_keysequence_window_list_do(const xdo_t *xdo, Window window,
                             charcodemap_t *keys, int nkeys,
                             int pressed, int *modifier, useconds_t delay);
 
-
 /**
  * Wait for a window to have a specific map state.
  *
@@ -449,7 +447,6 @@ int xdo_wait_for_window_map_state(const xdo_t *xdo, Window wid, int map_state);
 #define SIZE_FROM 1
 int xdo_wait_for_window_size(const xdo_t *xdo, Window window, unsigned int width,
                              unsigned int height, int flags, int to_or_from);
-
 
 /**
  * Move a window to a specific location.
@@ -792,7 +789,6 @@ int xdo_select_set_require_visible(xdo_select_t *selection, int visible);
  * @param screen screen to use.
  */
 int xdo_select_set_screen(xdo_select_t *selection, int screen);
-
 
  /**
   * (Deprecated) Search for windows.

@@ -1118,7 +1118,6 @@ int xdo_send_keysequence_window_list_do(const xdo_t *xdo, Window window, charcod
     }
   }
 
-
   if (keymapchanged) {
     KeySym keysym_list[] = { 0 };
     _xdo_debug(xdo, "Reverting scratch keycode (sym %lu to %d)",
@@ -1130,7 +1129,6 @@ int xdo_send_keysequence_window_list_do(const xdo_t *xdo, Window window, charcod
   XFlush(xdo->xdpy);
   return XDO_SUCCESS;
 }
-
 
 int xdo_send_keysequence_window_down(const xdo_t *xdo, Window window, const char *keyseq,
                          useconds_t delay) {
