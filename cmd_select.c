@@ -19,6 +19,7 @@ int cmd_select(context_t *context) {
 
   typedef enum {
     opt_all,
+    opt_clients,
     opt_exact_class,
     opt_exact_classname,
     opt_exact_role,
@@ -38,6 +39,7 @@ int cmd_select(context_t *context) {
     { "all", no_argument, NULL, opt_all },
     { "class", required_argument, NULL, opt_match_class },
     { "classname", required_argument, NULL, opt_match_classname },
+    { "clients", no_argument, NULL, opt_clients },
     { "desktop", required_argument, NULL, opt_desktop },
     { "exact-class", required_argument, NULL, opt_exact_class },
     { "exact-classname", required_argument, NULL, opt_exact_classname },
@@ -63,6 +65,8 @@ int cmd_select(context_t *context) {
     "--max-depth <depth>          max window child depth\n"
     "\n"
     "--all                        include hidden windows\n"
+    "-c/--clients                 use managed clients\n"
+    "                             (wm must support _NET_CLIENT_LIST)\n"
     "--limit <count>              max # of windows to return\n"
     "-h/--help                    display this help and exit\n"
     "\n"
@@ -70,7 +74,7 @@ int cmd_select(context_t *context) {
     "  class, classname, role, title\n"
     ;
 
-  while ((c = getopt_long_only(context->argc, context->argv, "+h",
+  while ((c = getopt_long_only(context->argc, context->argv, "+ch",
                                longopts, &option_index)) != -1) {
     switch (c) {
       CRITERIA_CASE(_class, SEARCH_CLASS)
@@ -79,6 +83,10 @@ int cmd_select(context_t *context) {
       CRITERIA_CASE(_title, SEARCH_TITLE)
       case opt_all:
         xdo_select_set_require_visible(selection, 0);
+        break;
+      case 'c':
+      case opt_clients:
+        xdo_select_set_use_client_list(selection, 1);
         break;
       case opt_desktop:
         ret = xdo_select_set_desktop(selection, atoi(optarg));

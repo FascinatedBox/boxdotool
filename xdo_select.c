@@ -433,6 +433,14 @@ int xdo_select_set_screen(xdo_select_t *selection, int screen)
   return selection->failed;
 }
 
+void xdo_select_set_use_client_list(xdo_select_t *selection, int use)
+{
+  if (use)
+    selection->searchmask |= SEARCH_CLIENT_LIST;
+  else
+    selection->searchmask &= ~SEARCH_CLIENT_LIST;
+}
+
 int xdo_select_windows(xdo_select_t *selection, Window **windowlist_ret,
                        unsigned int *nwindows_ret) {
   if (selection->failed)
@@ -455,7 +463,8 @@ int xdo_select_windows(xdo_select_t *selection, Window **windowlist_ret,
       /* Start with depth=1 since we already covered the root windows */
       find_matching_windows(xdo, root, selection, windowlist_ret, nwindows_ret,
                             &windowlist_size, 1);
-  } else {
+  }
+  else if ((selection->searchmask & SEARCH_CLIENT_LIST) == 0) {
     int i;
     const int screencount = ScreenCount(xdo->xdpy);
     for (i = 0; i < screencount; i++) {
@@ -471,6 +480,31 @@ int xdo_select_windows(xdo_select_t *selection, Window **windowlist_ret,
       find_matching_windows(xdo, root, selection, windowlist_ret,
                             nwindows_ret, &windowlist_size, 1);
     }
+  }
+  else {
+    /* Search using the client list. */
+    Atom request = XInternAtom(xdo->xdpy, "_NET_CLIENT_LIST", False);
+    Window root = XDefaultRootWindow(xdo->xdpy);
+    Atom type;
+    int i, size;
+    long nitems;
+
+    unsigned char *data = xdo_get_window_property_by_atom(xdo, root, request,
+        &nitems, &type, &size);
+    Window *windows = (Window *)data;
+
+    for (i = 0;i < nitems;i++) {
+      Window w = windows[i];
+
+      if (check_window_match(xdo, w, selection)) {
+        (*windowlist_ret)[*nwindows_ret] = w;
+        (*nwindows_ret)++;
+      }
+
+      /* Recursing seems unnecessary here since these are not root windows. */
+    }
+
+    free(windows);
   }
 
   return XDO_SUCCESS;

@@ -170,6 +170,11 @@ typedef struct xdo {
 #define SEARCH_ROLE (1UL << 8)
 
 /**
+ * (Select only) Search using the client list (_NET_CLIENT_LIST).
+ */
+#define SEARCH_CLIENT_LIST (1UL << 9)
+
+/**
  * (Deprecated) The window search query structure.
  *
  * @see xdo_search_windows
@@ -808,6 +813,14 @@ int xdo_select_set_require_visible(xdo_select_t *selection, int visible);
  * @param screen screen to use.
  */
 int xdo_select_set_screen(xdo_select_t *selection, int screen);
+
+/**
+ * Set if the client list will be used as the input source (default: no)
+ *
+ * @param select the selection query.
+ * @param visible 1 if required, 0 otherwise.
+ */
+void xdo_select_set_use_client_list(xdo_select_t *selection, int use);
 
  /**
   * (Deprecated) Search for windows.
