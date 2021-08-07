@@ -67,6 +67,7 @@ int cmd_type(context_t *context);
 int cmd_version(context_t *context);
 int cmd_window_select(context_t *context);
 int cmd_windowactivate(context_t *context);
+int cmd_windowdecoration(context_t *context);
 int cmd_windowfocus(context_t *context);
 int cmd_windowkill(context_t *context);
 int cmd_windowclose(context_t *context);

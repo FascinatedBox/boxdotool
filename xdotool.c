@@ -246,6 +246,7 @@ struct dispatch {
   { "set_window", cmd_set_window, },
   { "type", cmd_type, },
   { "windowactivate", cmd_windowactivate, },
+  { "windowdecoration", cmd_windowdecoration, },
   { "windowfocus", cmd_windowfocus, },
   { "windowkill", cmd_windowkill, },
   { "windowclose", cmd_windowclose, },

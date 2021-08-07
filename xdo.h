@@ -621,6 +621,25 @@ int xdo_unmap_window(const xdo_t *xdo, Window wid);
  */
 int xdo_minimize_window(const xdo_t *xdo, Window wid);
 
+/**
+ * Decorations to use with xdo_set_window_decorations.
+ *
+ * Combining decorations with DECORATION_ALL will show all decorations except
+ * the ones given.
+ */
+#define DECORATION_ALL (1L << 0)
+#define DECORATION_RESIZE (1L << 1)
+#define DECORATION_MOVE (1L << 2)
+#define DECORATION_MINIMIZE (1L << 3)
+#define DECORATION_MAXIMIZE (1L << 4)
+#define DECORATION_CLOSE (1L << 5)
+
+/**
+ * Set the decorations available on a window. Use 0 for a borderless window.
+ */
+int xdo_set_window_decorations(const xdo_t *xdo, Window window,
+                               int decorations);
+
 #define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
 #define _NET_WM_STATE_ADD           1    /* add/set property */
 #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */

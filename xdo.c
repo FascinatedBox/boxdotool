@@ -1982,6 +1982,36 @@ int xdo_minimize_window(const xdo_t *xdo, Window window) {
   return _is_success("XIconifyWindow", ret == 0, xdo);
 }
 
+struct MwmHints {
+  unsigned long flags;
+  unsigned long functions;
+  unsigned long decorations;
+  long input_mode;
+  unsigned long status;
+};
+
+#define HINT_FUNCTIONS (1L << 0)
+#define HINT_DECORATIONS (1L << 1)
+
+int xdo_set_window_decorations(const xdo_t *xdo, Window window,
+                               int decorations)
+{
+  Atom mwmHintsProperty = XInternAtom(xdo->xdpy, "_MOTIF_WM_HINTS", 0);
+  struct MwmHints hints;
+  /* For simplicity, set functions available and decorations as a set. */
+  hints.flags = HINT_FUNCTIONS | HINT_DECORATIONS;
+  hints.functions = decorations;
+  hints.decorations = decorations;
+  hints.input_mode = 0;
+  hints.status = 0;
+
+  int ret = XChangeProperty(xdo->xdpy, window, mwmHintsProperty,
+                            mwmHintsProperty,
+                            32, PropModeReplace, (unsigned char *)&hints, 5);
+
+  return ret;
+}
+
 void _xdo_debug(const xdo_t *xdo, const char *format, ...) {
   va_list args;
 
