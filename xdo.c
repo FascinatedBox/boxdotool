@@ -1931,6 +1931,8 @@ int xdo_get_window_name(const xdo_t *xdo, Window window,
   *name_ret = xdo_get_window_property_by_atom(xdo, window, atom_NET_WM_NAME, &nitems,
                              &type, &size);
   if (nitems == 0) {
+    /* This prevents a leak if the property is set but empty. */
+    free(*name_ret);
     *name_ret = xdo_get_window_property_by_atom(xdo, window, atom_WM_NAME, &nitems,
                                &type, &size);
   }
