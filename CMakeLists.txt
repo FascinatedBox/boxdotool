@@ -19,6 +19,32 @@ find_package(
         Xtst
 )
 
+set(FOUND_ALL 1)
+
+if(NOT X11_Xext_FOUND)
+    message(SEND_ERROR "Missing Xext development headers.")
+    set(FOUND_ALL 0)
+endif()
+
+if(NOT X11_Xinerama_FOUND)
+    message(SEND_ERROR "Missing Xinerama development headers.")
+    set(FOUND_ALL 0)
+endif()
+
+if(NOT X11_Xkb_FOUND)
+    message(SEND_ERROR "Missing Xkb development headers.")
+    set(FOUND_ALL 0)
+endif()
+
+if(NOT X11_Xtst_FOUND)
+    message(SEND_ERROR "Missing Xtst development headers.")
+    set(FOUND_ALL 0)
+endif()
+
+if(NOT FOUND_ALL)
+    message(FATAL_ERROR "One or more headers are missing. Stopping.")
+endif()
+
 add_library(boxdo_obj OBJECT xdo.c xdo_search.c xdo_select.c)
 add_library(boxdo SHARED $<TARGET_OBJECTS:boxdo_obj>)
 target_link_libraries(
