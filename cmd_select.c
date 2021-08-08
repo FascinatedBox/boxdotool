@@ -13,7 +13,7 @@ int cmd_select(context_t *context) {
   char *cmd = *context->argv;
   int c;
   int option_index;
-  int ret;
+  int ret = XDO_SUCCESS;
 
   xdo_select_t *selection = xdo_select_new(context->xdo);
 
