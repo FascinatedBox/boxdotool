@@ -328,7 +328,7 @@ void xdo_select_free(xdo_select_t *selection)
 {
   FREE_CRITERIA(SEARCH_CLASS, winclass, winclassrx)
   FREE_CRITERIA(SEARCH_CLASSNAME, winclassname, winclassnamerx)
-  FREE_CRITERIA(SEARCH_NAME, wintitle, wintitlerx)
+  FREE_CRITERIA(SEARCH_TITLE, wintitle, wintitlerx)
   FREE_CRITERIA(SEARCH_ROLE, winrole, winrolerx)
   free(selection);
 }
