@@ -501,6 +501,11 @@ int xdo_select_windows(xdo_select_t *selection, Window **windowlist_ret,
         (*nwindows_ret)++;
       }
 
+      if (selection->limit > 0 && *nwindows_ret >= selection->limit) {
+        /* Limit hit, break early. */
+        break;
+      }
+
       /* Recursing seems unnecessary here since these are not root windows. */
     }
 
