@@ -174,7 +174,7 @@ void window_list(context_t *context, const char *window_arg,
       int window_index = atoi(window_arg + 1);
       if (window_index < 0) {
         /* negative offset */
-        window_index = context->nwindows + window_index;
+        window_index = context->nwindows + window_index + 1;
       }
 
       if (window_index > context->nwindows || window_index <= 0) {
