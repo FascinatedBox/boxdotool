@@ -54,7 +54,7 @@ int cmd_getmouselocation(context_t *context) {
   } else {
     /* only print if we're the last command */
     if (context->argc == 0) {
-      xdotool_output(context, "x:%d y:%d screen:%d window:%ld", x, y, screen_num, window);
+      xdotool_output(context, "x:%d y:%d screen:%d window:%.8lx", x, y, screen_num, window);
     }
     window_save(context, window);
   }
