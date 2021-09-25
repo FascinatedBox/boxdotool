@@ -34,8 +34,7 @@ int context_execute(context_t *context);
 void consume_args(context_t *context, int argc);
 void window_save(context_t *context, Window window);
 void window_list(context_t *context, const char *window_arg,
-                 Window **windowlist_ret, int *nwindows_ret,
-                 const int add_to_list);
+                 Window **windowlist_ret, int *nwindows_ret);
 int window_get_arg(context_t *context, int min_arg, int window_arg_pos,
                    const char **window_arg);
 int window_is_valid(context_t *context, const char *window_arg);
@@ -127,8 +126,7 @@ int window_get_arg(context_t *context, int min_arg, int window_arg_pos,
 } /* int window_get_arg(context_t *, int, int, char **, int *) */
 
 void window_list(context_t *context, const char *window_arg,
-                 Window **windowlist_ret, int *nwindows_ret,
-                 const int add_to_list) {
+                 Window **windowlist_ret, int *nwindows_ret) {
   /* If window_arg is NULL and we have windows in the list, use the list.
    * If window_arg is "%@" and we have windows in the list, use the list.
    * If window_arg is "%N" and we have windows in the list, use Nth window.
@@ -204,10 +202,6 @@ void window_list(context_t *context, const char *window_arg,
     context->window_placeholder[0] = window;
     *nwindows_ret = 1;
     *windowlist_ret = context->window_placeholder;
-  }
-
-  if (add_to_list) {
-    /* save the window to the windowlist */
   }
 }
 

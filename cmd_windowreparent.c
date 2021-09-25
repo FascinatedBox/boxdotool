@@ -40,7 +40,7 @@ int cmd_windowreparent(context_t *context) {
   /* Permit using WINDOW STACK notation for the destination window, too */
   Window *destwindows = NULL;
   int ndestwindows = 0;
-  window_list(context, context->argv[0], &destwindows, &ndestwindows, False);
+  window_list(context, context->argv[0], &destwindows, &ndestwindows);
 
   if (ndestwindows > 1) {
     fprintf(stderr, "It doesn't make sense to have multiple destinations as the "

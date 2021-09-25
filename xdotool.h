@@ -12,7 +12,7 @@ extern "C" {
 { \
   Window *windows; \
   int nwindows; \
-  window_list(context, window_arg, &windows, &nwindows, False); \
+  window_list(context, window_arg, &windows, &nwindows); \
   int w_index;\
   for (w_index = 0; w_index < nwindows; w_index++) { \
     Window window = windows[w_index]; \

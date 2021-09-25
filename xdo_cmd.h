@@ -23,8 +23,7 @@ extern "C" {
 
 extern void consume_args(context_t *context, int argc);
 extern void window_list(context_t *context, const char *window_arg,
-                        Window **windowlist_ret, int *nwindows_ret,
-                        const int add_to_list);
+                        Window **windowlist_ret, int *nwindows_ret);
 
 extern void window_save(context_t *context, Window window);
 extern int is_command(char *cmd);
