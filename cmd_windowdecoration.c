@@ -56,7 +56,7 @@ int cmd_windowdecoration(context_t *context) {
     "   all, none, resize, move, minimize, maximize, close\n"
     "\n"
     "Decorations must be given as a single comma-separated string:\n"
-    "   windowdecorate resize,move,close\n"
+    "   windowdecoration resize,move,close\n"
     "\n"
     HELP_SEE_WINDOW_STACK;
 
