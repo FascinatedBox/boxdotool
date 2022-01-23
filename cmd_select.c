@@ -14,6 +14,7 @@ int cmd_select(context_t *context) {
   int c;
   int option_index;
   int ret = XDO_SUCCESS;
+  int do_sync = 0;
 
   xdo_select_t *selection = xdo_select_new(context->xdo);
 
@@ -33,6 +34,7 @@ int cmd_select(context_t *context) {
     opt_max_depth,
     opt_pid,
     opt_screen,
+    opt_sync,
     opt_help,
   } optlist_t;
   struct option longopts[] = {
@@ -50,6 +52,7 @@ int cmd_select(context_t *context) {
     { "pid", required_argument, NULL, opt_pid },
     { "role", required_argument, NULL, opt_match_role },
     { "screen", required_argument, NULL, opt_screen },
+    { "sync", no_argument, NULL, opt_sync },
     { "title", required_argument, NULL, opt_match_title },
     { "help", no_argument, NULL, opt_help },
     { 0, 0, 0, 0 },
@@ -63,6 +66,7 @@ int cmd_select(context_t *context) {
     "--desktop <N>                specific desktop to search\n"
     "--screen <N>                 specific screen to search\n"
     "--max-depth <depth>          max window child depth\n"
+    "--sync                       wait until a result is found\n"
     "\n"
     "--all                        include hidden windows\n"
     "-c/--clients                 use managed clients\n"
@@ -103,6 +107,9 @@ int cmd_select(context_t *context) {
       case opt_screen:
         ret = xdo_select_set_screen(selection, atoi(optarg));
         break;
+      case opt_sync:
+        do_sync = 1;
+        break;
       case opt_help:
         printf(usage, cmd);
         consume_args(context, context->argc);
@@ -119,8 +126,21 @@ int cmd_select(context_t *context) {
   consume_args(context, optind);
 
   int nwindows;
-  Window *list;
-  xdo_select_windows(selection, &list, &nwindows);
+  Window *list = NULL;
+
+  while (1) {
+    xdo_select_windows(selection, &list, &nwindows);
+
+    if (do_sync == 1 && nwindows == 0) {
+      free(list);
+
+      /* TODO: Make this tunable. */
+      usleep(500000);
+      continue;
+    }
+
+    break;
+  }
 
   if (context->argc == 0) {
     int i;
