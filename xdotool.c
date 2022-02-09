@@ -90,8 +90,12 @@ int window_is_valid(context_t *context, const char *window_arg) {
     return True;
   }
 
+  /* +1 to skip past '%'. */
   int window_index = atoi(window_arg + 1);
-  if (abs(window_index - 1) >= context->nwindows || (window_index == 0)) {
+
+  if (window_index == 0 ||
+      window_index > context->nwindows ||
+      window_index < -context->nwindows) {
     fprintf(stderr, "Invalid window stack selection '%s' (out of range)\n", window_arg);
     return False;
   }
