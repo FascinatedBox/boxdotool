@@ -2011,7 +2011,7 @@ int xdo_set_window_decorations(const xdo_t *xdo, Window window,
                             mwmHintsProperty,
                             32, PropModeReplace, (unsigned char *)&hints, 5);
 
-  return ret;
+  return _is_success("XChangeProperty[_MOTIF_WM_HINTS]", ret == 0, xdo);
 }
 
 void _xdo_debug(const xdo_t *xdo, const char *format, ...) {
