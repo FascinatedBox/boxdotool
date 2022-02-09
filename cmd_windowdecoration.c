@@ -88,6 +88,8 @@ int cmd_windowdecoration(context_t *context) {
   if (decorations == -1)
     return EXIT_FAILURE;
 
+  consume_args(context, 1);
+
   window_each(context, window_arg, {
     ret = xdo_set_window_decorations(context->xdo, window, decorations);
   });
