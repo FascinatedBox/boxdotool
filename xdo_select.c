@@ -26,6 +26,9 @@ static int _select_by_role(const xdo_t *xdo, const xdo_select_t *selection,
                                   Window window);
 static int _select_by_pid(const xdo_t *xdo, const xdo_select_t *selection,
                                  Window window);
+static int _select_by_prop_exists(const xdo_t *xdo,
+                                  const xdo_select_t *selection,
+                                  Window window);
 static int _select_by_visible(const xdo_t *xdo, Window wid);
 static void find_matching_windows(xdo_t *xdo, Window window,
                                   xdo_select_t *selection,
@@ -158,6 +161,15 @@ static int _select_by_pid(const xdo_t *xdo, const xdo_select_t *selection,
   }
 }
 
+static int _select_by_has_prop(const xdo_t *xdo, const xdo_select_t *selection,
+                               Window window) {
+  if (xdo_get_has_property(xdo, window, selection->hasprop)) {
+    return True;
+  } else {
+    return False;
+  }
+}
+
 static int compile_re(const char *pattern, regex_t *re) {
   int ret;
   if (pattern == NULL) {
@@ -191,6 +203,8 @@ static int check_window_match(xdo_t *xdo, Window wid,
   int role_want = selection->searchmask & SEARCH_ROLE;
   int title_want = selection->searchmask & SEARCH_TITLE;
   int visible_want = selection->searchmask & SEARCH_ONLYVISIBLE;
+  int prop_want = selection->searchmask & SEARCH_HAS_PROPERTY;
+
   int ok = False;
 
   do {
@@ -227,6 +241,9 @@ static int check_window_match(xdo_t *xdo, Window wid,
       break;
 
     if (role_want && !_select_by_role(xdo, selection, wid))
+      break;
+
+    if (prop_want && !_select_by_has_prop(xdo, selection, wid))
       break;
 
     ok = True;
@@ -439,6 +456,14 @@ void xdo_select_set_use_client_list(xdo_select_t *selection, int use)
     selection->searchmask |= SEARCH_CLIENT_LIST;
   else
     selection->searchmask &= ~SEARCH_CLIENT_LIST;
+}
+
+void xdo_select_set_has_property(xdo_select_t *selection, const char *property)
+{
+  Atom prop = XInternAtom(selection->xdo->xdpy, property, False);
+
+  selection->searchmask |= SEARCH_HAS_PROPERTY;
+  selection->hasprop = prop;
 }
 
 int xdo_select_windows(xdo_select_t *selection, Window **windowlist_ret,

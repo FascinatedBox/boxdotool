@@ -175,6 +175,11 @@ typedef struct xdo {
 #define SEARCH_CLIENT_LIST (1UL << 9)
 
 /**
+ * (Select only) Search for a specified property existing.
+ */
+#define SEARCH_HAS_PROPERTY (1UL << 10)
+
+/**
  * (Deprecated) The window search query structure.
  *
  * @see xdo_search_windows
@@ -572,6 +577,14 @@ int xdo_wait_for_window_focus(const xdo_t *xdo, Window window, int want_focus);
 int xdo_get_pid_window(const xdo_t *xdo, Window window);
 
 /**
+ * Check if a property exists on a window (any value).
+ *
+ * @param window the window to query.
+ * @return property the property to search for.
+ */
+int xdo_get_has_property(const xdo_t *xdo, Window window, Atom property);
+
+/**
  * Like xdo_get_focused_window, but return the first ancestor-or-self window *
  * having a property of WM_CLASS. This allows you to get the "real" or
  * top-level-ish window having focus rather than something you may not expect
@@ -781,6 +794,14 @@ int xdo_select_set_criteria(xdo_select_t *selection, unsigned int criteria,
  * @param desktop desktop to use.
  */
 int xdo_select_set_desktop(xdo_select_t *selection, int desktop);
+
+/**
+ * Specify the name of an atom to check for.
+ *
+ * @param select the selection query.
+ * @param property the name of the atom.
+ */
+void xdo_select_set_has_property(xdo_select_t *selection, const char *property);
 
 /**
  * Set the search limit. Zero for unlimited. (default: unlimited)

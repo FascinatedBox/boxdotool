@@ -27,6 +27,7 @@ int cmd_select(context_t *context) {
     opt_exact_title,
     opt_desktop,
     opt_limit,
+    opt_has_property,
     opt_match_class,
     opt_match_classname,
     opt_match_role,
@@ -48,6 +49,7 @@ int cmd_select(context_t *context) {
     { "exact-role", required_argument, NULL, opt_exact_role },
     { "exact-title", required_argument, NULL, opt_exact_title },
     { "limit", required_argument, NULL, opt_limit },
+    { "has-property", required_argument, NULL, opt_has_property },
     { "max-depth", required_argument, NULL, opt_max_depth },
     { "pid", required_argument, NULL, opt_pid },
     { "role", required_argument, NULL, opt_match_role },
@@ -62,6 +64,7 @@ int cmd_select(context_t *context) {
     "--exact-<criteria> <string>  must be exactly <string>\n"
     "--<criteria> <pattern>       match against regexp <pattern>\n"
     "--pid <id>                   check for _NET_WM_PID being <id>\n"
+    "--has-property <property>    check for <property> (any value)\n"
     "\n"
     "--desktop <N>                specific desktop to search\n"
     "--screen <N>                 specific screen to search\n"
@@ -94,6 +97,9 @@ int cmd_select(context_t *context) {
         break;
       case opt_desktop:
         ret = xdo_select_set_desktop(selection, atoi(optarg));
+        break;
+      case opt_has_property:
+        xdo_select_set_has_property(selection, optarg);
         break;
       case opt_limit:
         ret = xdo_select_set_limit(selection, atoi(optarg));

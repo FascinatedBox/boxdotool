@@ -34,6 +34,8 @@ typedef struct xdo_select {
 
   /* How many results to return? If 0, return all. */
   unsigned int limit;
+
+  Atom hasprop;
 } xdo_select_t;
 
 #endif

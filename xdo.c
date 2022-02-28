@@ -1757,6 +1757,18 @@ int xdo_set_active_modifiers(const xdo_t *xdo, Window window, charcodemap_t *act
   return ret;
 }
 
+int xdo_get_has_property(const xdo_t *xdo, Window window, Atom property)
+{
+  Atom type;
+  int size;
+  long nitems;
+  unsigned char *data = xdo_get_window_property_by_atom(xdo, window, property,
+                            &nitems, &type, &size);
+
+  free(data);
+  return nitems != 0;
+}
+
 int xdo_get_pid_window(const xdo_t *xdo, Window window) {
   Atom type;
   int size;
