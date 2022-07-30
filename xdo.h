@@ -544,6 +544,14 @@ int xdo_set_window_override_redirect(const xdo_t *xdo, Window wid,
 int xdo_focus_window(const xdo_t *xdo, Window wid);
 
 /**
+ * Lower a window to the bottom of the window stack, putting it visually below
+ * other windows.
+ *
+ * @param wid The window to lower.
+ */
+int xdo_lower_window(const xdo_t *xdo, Window wid);
+
+/**
  * Raise a window to the top of the window stack. This is also sometimes
  * termed as bringing the window forward.
  *

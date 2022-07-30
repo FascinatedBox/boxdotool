@@ -784,6 +784,13 @@ int xdo_select_window_with_click(const xdo_t *xdo, Window *window_ret) {
   return XDO_SUCCESS;
 }
 
+int xdo_lower_window(const xdo_t *xdo, Window wid) {
+  int ret = 0;
+  ret = XLowerWindow(xdo->xdpy, wid);
+  XFlush(xdo->xdpy);
+  return _is_success("XLowerWindow", ret == 0, xdo);
+}
+
 /* XRaiseWindow is ignored in ion3 and Gnome2. Is it even useful? */
 int xdo_raise_window(const xdo_t *xdo, Window wid) {
   int ret = 0;
