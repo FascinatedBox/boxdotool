@@ -71,6 +71,7 @@ int cmd_windowmove(context_t *context) {
   windowmove.opsync = 0;
   windowmove.window = CURRENTWINDOW;
   windowmove.flags = 0;
+  windowmove.gravity = 0;
 
   int c;
   typedef enum {
