@@ -1,3 +1,9 @@
+This fork of xdotool contains fixes for a variety of issues within xdotool. I am
+no longer maintaining this fork, but I am leaving it up in the event that
+someone finds it useful. You may also find my project `bonk` to be useful as
+well: It provides improved selection capabilities, but does not have keyboard or
+mouse faking.
+
 xdotool: Fake input from the mouse and keyboard very easily.
   Also supports window manager actions such as moving, activating, and other
   actions on windows.
